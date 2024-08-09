@@ -5,8 +5,8 @@ import axios from 'axios';
 import { Web3 } from 'web3';
 import { IpcProvider } from 'web3-providers-ipc';
 
-const IPC_PATH = '/root/TAOevmCore/chaindata/node1/geth.ipc'; 
-const ACCESS_TOKEN = '123456789';
+const IPC_PATH = '/root/core-blockchain/chaindata/node1/geth.ipc'; 
+const ACCESS_TOKEN = '4e789382-6fe0-4bd7-8d86-9f79fffa35cf';
 const POST_API_URL = 'http://64.227.190.6/post-enode';
 const GET_API_URL = 'http://64.227.190.6/get-enode';
 const INTERVAL = 5000;
