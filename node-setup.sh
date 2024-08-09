@@ -59,24 +59,24 @@ task4(){
   
   if [[ $totalValidator -gt 0 ]]; then
     
-    LINE='cd /root/Core-Blockchain/'
+    LINE='cd /root/core-blockchain/'
     if grep -Fxq "$LINE" /etc/profile
     then
       # code if found
       echo -e "${ORANGE}path is already added"
     else
       # code if not found
-      echo -e '\ncd /root/Core-Blockchain/' >>/etc/profile
+      echo -e '\ncd /root/core-blockchain/' >>/etc/profile
     fi
 
-    LINE='bash /root/Core-Blockchain/node-start.sh --validator'
+    LINE='bash /root/core-blockchain/node-start.sh --validator'
     if grep -Fxq "$LINE" /etc/profile
     then
       # code if found
       echo -e "${ORANGE}autostart is already added"
     else
       # code if not found
-      echo -e '\nbash /root/Core-Blockchain/node-start.sh --validator' >>/etc/profile
+      # echo -e '\nbash /root/core-blockchain/node-start.sh --validator' >>/etc/profile
     fi
       
       
@@ -84,24 +84,24 @@ task4(){
 
   if [[ $totalRpc -gt 0 ]]; then
 
-    LINE='cd /root/Core-Blockchain/'
+    LINE='cd /root/core-blockchain/'
     if grep -Fxq "$LINE" /etc/profile
     then
       # code if found
       echo -e "${ORANGE}path is already added"
     else
       # code if not found
-      echo -e '\ncd /root/Core-Blockchain/' >>/etc/profile
+      echo -e '\ncd /root/core-blockchain/' >>/etc/profile
     fi
 
-    LINE='bash /root/Core-Blockchain/node-start.sh --rpc'
+    LINE='bash /root/core-blockchain/node-start.sh --rpc'
     if grep -Fxq "$LINE" /etc/profile
     then
       # code if found
       echo -e "${ORANGE}autostart is already added"
     else
       # code if not found
-      echo -e '\nbash /root/Core-Blockchain/node-start.sh --rpc' >>/etc/profile
+      # echo -e '\nbash /root/core-blockchain/node-start.sh --rpc' >>/etc/profile
     fi
     
   fi
@@ -245,12 +245,72 @@ fetchNsetIP(){
   echo -e "\nIP=$(curl http://checkip.amazonaws.com)" >> ./.env
 }
 
+install_nvm() {
+  # Check if nvm is installed
+  if ! command -v nvm &> /dev/null; then
+    echo "Installing NVM..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+
+    # Source NVM scripts for the current session
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+    # Add NVM initialization to shell startup file
+    if [ -n "$BASH_VERSION" ]; then
+      SHELL_PROFILE="$HOME/.bashrc"
+    elif [ -n "$ZSH_VERSION" ]; then
+      SHELL_PROFILE="$HOME/.zshrc"
+    fi
+
+    if ! grep -q 'export NVM_DIR="$HOME/.nvm"' "$SHELL_PROFILE"; then
+      echo 'export NVM_DIR="$HOME/.nvm"' >> "$SHELL_PROFILE"
+      echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> "$SHELL_PROFILE"
+      echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> "$SHELL_PROFILE"
+    fi
+  else
+    echo "NVM is already installed."
+  fi
+
+  # Source NVM scripts (if not sourced already)
+  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+  # Install Node.js version 21.7.1 using nvm
+  echo "Installing Node.js version 21.7.1..."
+  nvm install 21.7.1
+
+  # Use the installed Node.js version
+  nvm use 21.7.1
+
+  # Verify the installation
+  node_version=$(node --version)
+  if [[ $node_version == v21.7.1 ]]; then
+    echo "Node.js version 21.7.1 installed successfully: $node_version"
+  else
+    echo "There was an issue installing Node.js version 21.7.1."
+  fi
+
+  source ~/.bashrc
+
+  npm install --global yarn
+  npm install --global pm2
+}
+
 finalize(){
   displayWelcome
   createRpc
   createValidator
   labelNodes
   #fetchNsetIP
+
+  install_nvm
+  cd plugins/sync-helper
+  yarn
+  cd ../../
+
+
   displayStatus
 }
 
