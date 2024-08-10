@@ -121,8 +121,10 @@ finalize(){
   echo -e "\n${GREEN}+------------------ Active Nodes -------------------+${NC}"
 
   echo -e "\n${GREEN}+------------------ Starting sync-helper -------------------+"
-  pm2 start ./plugins/sync-helper/
+  cd ./plugins/sync-helper/
+  pm2 start index.js
   pm2 save
+  cd ../../
 }
 
 
