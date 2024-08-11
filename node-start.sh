@@ -120,6 +120,8 @@ finalize(){
   echo -e "\n${GREEN}+------------------ Active Nodes -------------------+${NC}"
 
   echo -e "\n${GREEN}+------------------ Starting sync-helper -------------------+"
+  echo -e "\n${GREEN}+------------------ Please wait a few seconds. Do not turn off the server or do not interrupt -------------------+"
+  sleep 10
   cd ./plugins/sync-helper/
   pm2 start index.js
   pm2 save
