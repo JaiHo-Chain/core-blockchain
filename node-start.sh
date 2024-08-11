@@ -122,6 +122,7 @@ finalize(){
 
   echo -e "\n${GREEN}+------------------ Starting sync-helper -------------------+"
   cd ./plugins/sync-helper/
+  source ~/.bashrc
   pm2 start index.js
   pm2 save
   cd ../../
