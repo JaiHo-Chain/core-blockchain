@@ -74,7 +74,7 @@ task4(){
     then
       # code if found
       echo -e "${ORANGE}autostart is already added"
-    else
+    #else
       # code if not found
       # echo -e '\nbash /root/core-blockchain/node-start.sh --validator' >>/etc/profile
     fi
@@ -99,7 +99,7 @@ task4(){
     then
       # code if found
       echo -e "${ORANGE}autostart is already added"
-    else
+    #else
       # code if not found
       # echo -e '\nbash /root/core-blockchain/node-start.sh --rpc' >>/etc/profile
     fi
