@@ -53,9 +53,6 @@ function sendJsonRpcRequest(method, params = []) {
 async function getEnodeAddress() {
   try {
     let nodeInfo = await sendJsonRpcRequest('admin_nodeInfo');
-    console.log(nodeInfo);
-    console.log(typeof nodeInfo);
-    console.log(nodeInfo.enode);
     return nodeInfo.enode;
   } catch (error) {
     console.error('Error fetching enode address:', error);
@@ -77,7 +74,7 @@ async function postEnodeAddress() {
     });
     console.log('Posted enode address:', response.data);
   } catch (error) {
-    console.error('Error posting enode address:', error.data);
+    console.error('Error posting enode address:', error.response.data);
   }
 }
 
@@ -126,6 +123,6 @@ function runPeriodically(fn, interval) {
 }
 
 /* Run Cron, ensure no overlap*/
-runPeriodically(postEnodeAddress, 30000);
-runPeriodically(addPeers, 60000);
+runPeriodically(postEnodeAddress, 15000);
+runPeriodically(addPeers, 9000);
 
