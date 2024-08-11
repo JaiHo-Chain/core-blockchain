@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import net from 'net';
 import axios from 'axios';
@@ -11,8 +10,8 @@ const POST_API_URL = 'https://sync-helper.jaihochain.com/post-enode';
 const GET_API_URL = 'https://sync-helper.jaihochain.com/get-enode';
 const INTERVAL = 5000;
 
-const provider = new IpcProvider(IPC_PATH, net);
-const web3 = new Web3(provider);
+let provider;
+let web3;
 
 function sendJsonRpcRequest(method, params = []) {
   return new Promise((resolve, reject) => {
@@ -122,7 +121,23 @@ function runPeriodically(fn, interval) {
   setInterval(execute, interval);
 }
 
-/* Run Cron, ensure no overlap*/
-runPeriodically(postEnodeAddress, 15000);
-runPeriodically(addPeers, 9000);
+function waitForIpcFile() {
+  const checkFileExists = () => {
+    if (fs.existsSync(IPC_PATH)) {
+      console.log('IPC file found. Starting execution...');
+      provider = new IpcProvider(IPC_PATH, net);
+      web3 = new Web3(provider);
+      
+      runPeriodically(postEnodeAddress, 15000);
+      runPeriodically(addPeers, 9000);
+    } else {
+      console.log('IPC file not found. Waiting...');
+      setTimeout(checkFileExists, INTERVAL);
+    }
+  };
 
+  checkFileExists();
+}
+
+// Start the IPC file check
+waitForIpcFile();
