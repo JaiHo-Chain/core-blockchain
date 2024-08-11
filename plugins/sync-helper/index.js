@@ -77,7 +77,7 @@ async function postEnodeAddress() {
     });
     console.log('Posted enode address:', response.data);
   } catch (error) {
-    console.error('Error posting enode address:', error);
+    console.error('Error posting enode address:', error.data);
   }
 }
 
