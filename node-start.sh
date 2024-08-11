@@ -215,17 +215,17 @@ fi
 
 finalize
 
-echo -e "\n${GREEN}+------------------ Waiting for IPC file -------------------+"
+# echo -e "\n${GREEN}+------------------ Waiting for IPC file -------------------+"
   
-while [ ! -e "/root/core-blockchain/chaindata/node1/geth.ipc" ]; do
-  echo -e "\n${ORANGE}+-- Waiting for /root/core-blockchain/chaindata/node1/geth.ipc to be created --+"
-  sleep 5
-done
+# while [ ! -e "/root/core-blockchain/chaindata/node1/geth.ipc" ]; do
+#   echo -e "\n${ORANGE}+-- Waiting for /root/core-blockchain/chaindata/node1/geth.ipc to be created --+"
+#   sleep 5
+# done
 
-echo -e "\n${GREEN}+------------------ IPC file found! Starting sync-helper -------------------+"
-echo -e "\n${ORANGE}+-- Please wait a few seconds. Do not turn off the server or interrupt --+"
+# echo -e "\n${GREEN}+------------------ IPC file found! Starting sync-helper -------------------+"
+# echo -e "\n${ORANGE}+-- Please wait a few seconds. Do not turn off the server or interrupt --+"
   
-cd ./plugins/sync-helper/
-pm2 start index.js
-pm2 save
-cd ../../
+# cd ./plugins/sync-helper/
+# pm2 start index.js
+# pm2 save
+# cd ../../
