@@ -296,6 +296,8 @@ install_nvm() {
 
   npm install --global yarn
   npm install --global pm2
+
+  source ~/.bashrc
 }
 
 finalize(){
