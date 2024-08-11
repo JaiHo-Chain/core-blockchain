@@ -89,6 +89,7 @@ stopValidator(){
 }
 
 finalize(){
+  pm2 stop all
   countNodes
   
   if [ "$isRPC" = true ]; then
