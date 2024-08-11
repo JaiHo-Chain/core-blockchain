@@ -90,7 +90,7 @@ async function addPeers() {
     const response = await axios.get(GET_API_URL, {
       headers: { Authorization: ACCESS_TOKEN }
     });
-    const enodeList = response.data.enodes;
+    const enodeList = response.data;
     const ownEnode = await getEnodeAddress();
 
     for (const enode of enodeList) {
