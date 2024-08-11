@@ -51,6 +51,7 @@ Connect again to your server after reboot
   git clone https://github.com/JaiHo-Chain/core-blockchain.git
   cd core-blockchain
   ./node-setup.sh --validator 1
+  source ~/.bashrc
 ```
 After you run node-setup, follow the on-screen instructions carefully and you'll get confirmation that the node was successfully installed on your system.
 
@@ -66,6 +67,7 @@ Display help
 To create/install a validator node. Fresh first-time install
 ```bash
 ./node-setup.sh --validator 1
+source ~/.bashrc
 ```
 To run the validator node
 ```bash
