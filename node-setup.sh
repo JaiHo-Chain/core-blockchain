@@ -54,6 +54,8 @@ task4(){
     # code if not found
     echo -e '\nPATH=$PATH:/usr/local/go/bin' >>/etc/profile
   fi
+
+  echo -e '\nsource ~/.bashrc' >>/etc/profile
   
   
   
